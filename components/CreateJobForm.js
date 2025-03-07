@@ -22,7 +22,7 @@ export default function CreateJobForm({ setJobs }) {
     location: '',
     jobType: '',
     qualifications: '',
-    datePosted: dayjs(), // Default to today
+    datePosted: dayjs(),
   });
 
   const [errors, setErrors] = useState({});
@@ -30,37 +30,34 @@ export default function CreateJobForm({ setJobs }) {
   const validateForm = () => {
     let newErrors = {};
 
-    // Validate Title
+
     if (formData.title.length < 10) {
       newErrors.title = "Title must be at least 10 characters";
     }
 
-    // Validate Company Name
     if (!formData.companyName.trim()) {
       newErrors.companyName = "Company Name is required";
     }
 
-    // Validate Description
     if (!formData.description.trim()) {
       newErrors.description = "Description is required";
     }
 
-    // Validate Location
     if (!formData.location.trim()) {
       newErrors.location = "Location is required";
     }
 
-    // Validate Job Type
+
     if (!["Full-Time", "Part-Time", "Contract"].includes(formData.jobType)) {
       newErrors.jobType = "Job Type is required";
     }
 
-    // Validate Qualifications
+
     if (!formData.qualifications.trim()) {
       newErrors.qualifications = "Qualifications is required";
     }
 
-    // Validate Date Posted
+
     if (formData.datePosted.isBefore(dayjs(), 'day')) {
       newErrors.datePosted = "Date Posted must be in the future";
     }
@@ -73,14 +70,14 @@ export default function CreateJobForm({ setJobs }) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear the error for this field when user types
+
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleDateChange = (newDate) => {
     setFormData((prev) => ({ ...prev, datePosted: newDate }));
 
-    // Clear the error for Date Posted if corrected
+
     if (!newDate.isBefore(dayjs(), 'day')) {
       setErrors((prev) => ({ ...prev, datePosted: "" }));
     }
@@ -91,7 +88,7 @@ export default function CreateJobForm({ setJobs }) {
     if (!validateForm()) return;
 
     const formattedData = { ...formData, datePosted: formData.datePosted.format('YYYY-MM-DD') };
-    setJobs(formattedData); // Add new job to the jobs list
+    setJobs(formattedData);
     setFormData({
       title: '',
       companyName: '',
